@@ -18,13 +18,13 @@
         @forelse ($doctors as $doctor)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $doctor['nama'] }}</td>
-                <td>{{ $doctor['spesialisasi'] }}</td>
+                <td>{{ $doctor->name }}</td>
+                <td>{{ $doctor->specialization }}</td>
                 <td>
-                    @if ($doctor['status'] === 'Aktif')
+                    @if ($doctor->is_active)
                         <span>Aktif</span>
                     @else
-                        <span>{{ $doctor['status'] }}</span>
+                        <span>Tidak Aktif</span>
                     @endif
                 </td>
             </tr>

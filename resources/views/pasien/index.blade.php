@@ -17,8 +17,8 @@
         @forelse ($patients as $patient)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $patient['nama'] }}</td>
-                <td>{{ $patient['alamat'] }}</td>
+                <td>{{ $patient->name }}</td>
+                <td>{{ $patient->address }}</td>
             </tr>
         @empty
             <tr>
