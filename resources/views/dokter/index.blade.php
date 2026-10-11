@@ -9,8 +9,10 @@
     <thead>
         <tr>
             <th>No.</th>
+            <th>Kode Dokter</th>
             <th>Nama</th>
             <th>Spesialisasi</th>
+            <th>No. Telepon</th>
             <th>Status</th>
         </tr>
     </thead>
@@ -18,8 +20,10 @@
         @forelse ($doctors as $doctor)
             <tr>
                 <td>{{ $loop->iteration }}</td>
+                <td>{{ $doctor->doctor_code }}</td>
                 <td>{{ $doctor->name }}</td>
                 <td>{{ $doctor->specialization }}</td>
+                <td>{{ $doctor->phone ?? '-' }}</td>
                 <td>
                     @if ($doctor->is_active)
                         <span>Aktif</span>
@@ -30,7 +34,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="4">Belum ada data dokter.</td>
+                <td colspan="6">Belum ada data dokter.</td>
             </tr>
         @endforelse
     </tbody>
