@@ -5,24 +5,48 @@
 @section('content')
 <h1>Data Pasien</h1>
 
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+<p>
+    <a href="{{ route('pasien.create') }}" class="btn btn-primary btn-sm">Tambah Pasien</a>
+</p>
+
 <table border="1" cellpadding="8">
     <thead>
         <tr>
             <th>No.</th>
+            <th>No. Rekam Medis</th>
             <th>Nama</th>
             <th>Alamat</th>
+            <th>No. Telepon</th>
+            <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
         @forelse ($patients as $patient)
             <tr>
                 <td>{{ $loop->iteration }}</td>
+                <td>{{ $patient->medical_record_number }}</td>
                 <td>{{ $patient->name }}</td>
                 <td>{{ $patient->address }}</td>
+                <td>{{ $patient->phone ?? '-' }}</td>
+                <td>
+                    <a href="{{ route('pasien.edit', $patient->id) }}">Edit</a>
+
+                    <form action="{{ route('pasien.destroy', $patient->id) }}" method="POST" style="display:inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Hapus data pasien?')">Hapus</button>
+                    </form>
+                </td>
             </tr>
         @empty
             <tr>
-                <td colspan="3">Belum ada data pasien.</td>
+                <td colspan="6">Belum ada data pasien.</td>
             </tr>
         @endforelse
     </tbody>
