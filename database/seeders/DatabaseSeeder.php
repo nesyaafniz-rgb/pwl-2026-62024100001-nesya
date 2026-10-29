@@ -23,9 +23,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
+            PoliSeeder::class,
             PatientSeeder::class,
             DoctorSeeder::class,
-            PoliSeeder::class,
+            RegistrationSeeder::class,
         ]);
     }
 }
