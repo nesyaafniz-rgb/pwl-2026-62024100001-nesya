@@ -44,9 +44,6 @@
 
     <!-- Tema kustom (harus setelah AdminLTE) -->
     <style>
-/* ==========================================================
-   Tema Soft Netral - Sistem Informasi Klinik
-   ========================================================== */
 
 :root,
 [data-bs-theme="light"] {
@@ -348,12 +345,6 @@ body {
     font-weight: 500;
 }
 
-/* ==========================================================
-   FALLBACK sementara untuk halaman yang belum dirombak
-   (Dokter, Poli, Pendaftaran, Dashboard). Setelah view-nya
-   diganti memakai card/table Bootstrap, blok ini boleh dihapus.
-   ========================================================== */
-
 /* Judul ganda: sembunyikan h1 bawaan halaman, karena judul
    sudah ada di layout */
 .app-content .container-fluid > h1:first-child {
@@ -419,10 +410,6 @@ body {
 .app-content button:not(.btn):hover {
     background: #eef1ef;
 }
-
-/* ==========================================================
-   PENYESUAIAN UKURAN & KERAPIAN (form, tombol, tabel, badge)
-   ========================================================== */
 
 /* Header kartu: judul di kiri, tombol aksi di kanan */
 .card-header {
@@ -563,6 +550,14 @@ small {
     font-size: 0.8rem;
 }
 
+.dropdown-menu form {
+    margin: 0;
+}
+
+.dropdown-menu .dropdown-item {
+    font-size: 0.8rem;
+}
+
     </style>
 </head>
 
@@ -591,6 +586,8 @@ small {
 
             <!-- User Menu -->
             <ul class="navbar-nav ms-auto">
+
+                @auth
                 <li class="nav-item dropdown">
 
                     <a
@@ -606,7 +603,7 @@ small {
                         />
 
                         <span class="d-none d-md-inline">
-                            Nama User
+                            {{ Auth::user()->name }}
                         </span>
                     </a>
 
@@ -624,14 +621,28 @@ small {
                         </li>
 
                         <li>
-                            <a class="dropdown-item text-danger" href="#">
-                                <i class="bi bi-box-arrow-right me-2"></i>
-                                Logout
-                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="bi bi-box-arrow-right me-2"></i>
+                                    Logout
+                                </button>
+                            </form>
                         </li>
 
                     </ul>
                 </li>
+                @endauth
+
+                @guest
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>
+                        Login
+                    </a>
+                </li>
+                @endguest
+
             </ul>
 
         </div>
