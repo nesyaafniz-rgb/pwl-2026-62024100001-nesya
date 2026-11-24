@@ -604,6 +604,7 @@ small {
 
                         <span class="d-none d-md-inline">
                             {{ Auth::user()->name }}
+                            <small class="text-muted">({{ Auth::user()->role }})</small>
                         </span>
                     </a>
 
@@ -677,13 +678,17 @@ small {
 
             <nav class="mt-2" aria-label="Main navigation">
 
+                @php
+                    $role = Auth::user()?->role;
+                @endphp
+
                 <ul
                     class="nav sidebar-menu flex-column"
                     data-lte-toggle="treeview"
                     id="navigation"
                 >
 
-                    <!-- Dashboard -->
+                    <!-- Dashboard (semua role) -->
                     <li class="nav-item">
                         <a
                             href="{{ url('/dashboard') }}"
@@ -694,7 +699,8 @@ small {
                         </a>
                     </li>
 
-                    <!-- Pasien -->
+                    <!-- Pasien (admin, registration) -->
+                    @if (in_array($role, ['admin', 'registration']))
                     <li class="nav-item">
                         <a
                             href="{{ url('/pasien') }}"
@@ -704,8 +710,9 @@ small {
                             <p>Pasien</p>
                         </a>
                     </li>
+                    @endif
 
-                    <!-- Dokter -->
+                    <!-- Dokter (semua role) -->
                     <li class="nav-item">
                         <a
                             href="{{ url('/dokter') }}"
@@ -716,7 +723,7 @@ small {
                         </a>
                     </li>
 
-                    <!-- Poli -->
+                    <!-- Poli (semua role) -->
                     <li class="nav-item">
                         <a
                             href="{{ url('/poli') }}"
@@ -727,7 +734,7 @@ small {
                         </a>
                     </li>
 
-                    <!-- Pendaftaran -->
+                    <!-- Pendaftaran (semua role) -->
                     <li class="nav-item">
                         <a
                             href="{{ url('/pendaftaran') }}"
@@ -737,6 +744,32 @@ small {
                             <p>Pendaftaran</p>
                         </a>
                     </li>
+
+                    <!-- Pemeriksaan (doctor) -->
+                    @if ($role === 'doctor')
+                    <li class="nav-item">
+                        <a
+                            href="{{ url('/pemeriksaan') }}"
+                            class="nav-link {{ request()->is('pemeriksaan*') ? 'active' : '' }}"
+                        >
+                            <i class="nav-icon bi bi-clipboard2-pulse"></i>
+                            <p>Pemeriksaan</p>
+                        </a>
+                    </li>
+                    @endif
+
+                    <!-- Manajemen User (admin) -->
+                    @if ($role === 'admin')
+                    <li class="nav-item">
+                        <a
+                            href="{{ url('/users') }}"
+                            class="nav-link {{ request()->is('users*') ? 'active' : '' }}"
+                        >
+                            <i class="nav-icon bi bi-shield-lock"></i>
+                            <p>Manajemen User</p>
+                        </a>
+                    </li>
+                    @endif
 
                 </ul>
 

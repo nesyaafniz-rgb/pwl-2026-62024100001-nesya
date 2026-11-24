@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         User::updateOrCreate(
@@ -18,6 +15,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin Klinik',
                 'password' => Hash::make('password123'),
+                'role' => 'admin',
             ]
         );
 
@@ -26,6 +24,16 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Petugas Pendaftaran',
                 'password' => Hash::make('password123'),
+                'role' => 'registration',
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'dokter@klinik.test'],
+            [
+                'name' => 'Dokter Demo',
+                'password' => Hash::make('password123'),
+                'role' => 'doctor',
             ]
         );
     }
